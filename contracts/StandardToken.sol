@@ -44,18 +44,7 @@ contract StandardToken is ERC20Interface{
     * @return el resultado de la operación (true normalmente)
     */
     function transfer(address to, uint tokens) public returns (bool success) {
-        //burning ether
-        require(to != 0x0);
-
-        //validamos overflow
-        require(balances[to] + tokens >= balances[to]);
-
-        //validamos que tenga suficiente saldo y tokens
-        require(balances[msg.sender] >= tokens && tokens > 0);
-
-        balances[msg.sender] -= tokens;
-        balances[to] += tokens;
-
+        transfer(msg.sender, to, tokens);
         emit Transfer(msg.sender, to, tokens);
         return true;
     }
@@ -69,7 +58,17 @@ contract StandardToken is ERC20Interface{
     * @param tokens número de tokens que se envían
     * @return el resultado de la operación (true normalmente)
     */
-    function transferFrom(address from,  address to, uint tokens) public returns (bool success){
+    function transferFrom(address from, address to, uint tokens) public returns (bool success){
+        //se valida que se tenga permitido realizar el envío de tokens y que se permita envíae el número indicado
+        require(allowed[from][msg.sender] >= tokens);
+
+        transfer(from, to, tokens);
+        allowed[from][msg.sender] -= tokens;
+        emit Transfer(from, to, tokens);
+        return true;
+    }
+
+    function transfer(address from, address to, uint tokens) internal {
         //burning ether
         require(to != 0x0);
 
@@ -79,14 +78,20 @@ contract StandardToken is ERC20Interface{
         //se valida que se tenga el saldo suficiente y que se envíe un número válido de tokens
         require(balances[from] >= tokens && tokens > 0);
 
-        //se valida que se tenga permitido realizar el envío de tokens y que se permita envíae el número indicado
-        require(allowed[from][msg.sender] >= tokens);
-
         balances[from] -= tokens;
         balances[to] += tokens;
-        allowed[from][msg.sender] -= tokens;
+    }
 
-        emit Transfer(from, to, tokens);
+    /**
+    * @notice permite que una dirección use tokens de otra dirección.
+    * @dev la dirección que permite el envío de tokens es quien invoca el contrato (msg.sender)
+    * @param spender la dirección a la que se le permite usar los tokens
+    * @param tokens el número de tokens que se permitirá que se usen
+    * @return el resultado de la operación (true normalmente)
+    */
+    function approve(address spender, uint tokens) public returns (bool success) {
+        allowed[msg.sender][spender] = tokens;
+        emit Approval(msg.sender, spender, tokens);
         return true;
     }
 }
