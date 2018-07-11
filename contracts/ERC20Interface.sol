@@ -2,7 +2,11 @@
 // https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md
 pragma solidity ^0.4.24;
 
-
+/**
+* @title ERC20Interface
+* @author Tomado del código de Fabian Vogelsteller, Vitalik Buterin
+* @dev Este contrato fue modificado por Alex Montoya
+ */
 contract ERC20Interface {
     /* This is a slight change to the ERC20 base standard.
     function totalSupply() constant returns (uint256 supply);
@@ -56,12 +60,15 @@ contract ERC20Interface {
     function allowance(address _owner, address _spender) public view returns (uint256 remaining);
 
     // solhint-disable-next-line no-simple-event-func-name
-    /*
-    * MUST trigger when tokens are transferred, including zero value transfers.
-    *A token contract which creates new tokens SHOULD trigger a Transfer event with the _from address set to 0x0 when tokens are created.
+    /**
+    * @dev MUST trigger when tokens are transferred, including zero value transfers.
+    * @notice A token contract which creates new tokens SHOULD trigger a Transfer event with the _from address set to 0x0 when tokens are created.
+    * @param _from origin address
+    * @param _to destination address (recipient)
+    * @param _value number of tokens
     */
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
-    /* MUST trigger on any successful call to approve(address _spender, uint256 _value).*/
+    /** MUST trigger on any successful call to approve(address _spender, uint256 _value).*/
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 }
