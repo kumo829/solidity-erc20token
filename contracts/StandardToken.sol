@@ -17,6 +17,12 @@ contract StandardToken is ERC20Interface{
     //Número total de Tokens
     uint256 public totalSupply;
 
+    constructor(string tokenName, string tokenSymbol) public {
+        name = tokenName;
+        symbol = tokenSymbol;
+    }
+
+
     /**
     * @notice indica el balance (número de tokens) que tiene el usuario indicado.
     * @param tokenOwner dirección del usuario del que se quieren conocer los tokens
