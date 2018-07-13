@@ -1,0 +1,1 @@
+geth --datadir .\chaindata --rpc --rpccorsdomain "*" --rpcapi "db,eth,net,web3,personal"
