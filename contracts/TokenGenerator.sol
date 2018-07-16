@@ -1,33 +1,23 @@
 pragma solidity ^0.4.24;
 
-import "../contracts/StandardToken.sol";
-
-interface tokenRecipient {
-    function receiveApproval(address from, uint256 tokens, address tokenAddress, byte extraData) external;
-}
+import "./openzeppelin-solidity/StandardToken.sol";
+//import "github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/token/ERC20/StandardToken.sol";
 
 contract TokenGenerator is StandardToken {
-    string public name;
-    string public symbol;
-    uint8 public decimals = 18;
+    string public name = "BACoin"; 
+    string public symbol = "BAC";
+    uint public decimals = 2;
+    uint public INITIAL_SUPPLY = 10000 * (10 ** decimals);
 
-    constructor(uint256 initialSupply, string tokenName, string tokenSymbol) 
-                                                StandardToken(tokenName, tokenSymbol) public{
-        totalSupply = initialSupply * uint256(10) ** decimals;
-        balances[msg.sender] = totalSupply;
+    address public owner;
+
+    constructor() public{
+        totalSupply_ = INITIAL_SUPPLY;
+        balances[msg.sender] = INITIAL_SUPPLY;
+        owner = msg.sender;
     }
-
-    /**
-    * @notice esta función es llamada cuando se quiere permitir a una dirección usar ciertos tokens
-    * @param spenderAddress la dirección a la que se le permitirá usar tokens
-    * @param tokens el número de tokens que se permitirá usar
-    * @param extraData información adicional sobre esta autorización
-    */
-    function approveAndCall(address spenderAddress, uint256 tokens, byte extraData) public {
-        tokenRecipient spender = tokenRecipient(spenderAddress);
-
-        if(approve(spender, tokens)){
-            spender.receiveApproval(msg.sender, tokens, this, extraData);
-        }
+    
+    function kill() public {
+        if (msg.sender == owner) selfdestruct(owner);
     }
 }

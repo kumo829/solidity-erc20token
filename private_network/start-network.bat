@@ -1,1 +1,1 @@
-geth --datadir .\chaindata --rpc --rpccorsdomain "*" --rpcapi "db,eth,net,web3,personal"
+geth --datadir .\chaindata --rpc --rpccorsdomain "*" --rpcapi "db,eth,net,web3,personal" --unlock 0 --mine --minerthreads 1
