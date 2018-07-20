@@ -12,8 +12,8 @@
  *   },
  */
 var HDWalletProvider = require("truffle-hdwallet-provider");
-var mnemonic = "addme";
-var infuraToken = "addme";
+var mnemonic = "stool multiply betray coin trade penalty category yard leisure aware lyrics ball";
+var infuraToken = "4DLpOOyadqiIcXXjMezX";
  
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -21,6 +21,8 @@ module.exports = {
   networks: {
     "private": {
       network_id: 829,
+       gas: 4600000,
+      //gasPrice: 10000000000,
       host: "127.0.0.1",
       port: 8545   // Different than the default below
     },
