@@ -1,2 +1,4 @@
 build\
 private_network\chaindata\
+node_modules\
+angular-dapp\node_modules
