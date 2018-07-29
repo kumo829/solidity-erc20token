@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a href="" class="navbar-brand">Angular Dapp</a>
+  <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto nav justify-content-end">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Accounts
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <ul class="mx-3">
+            <li *ngFor="let account of accounts">
+              <span>{{account}} </span>
+              <button (click)="copyToClipboard(account)" tooltip="Copy this address to clipboard." placement="right">
+                <i class="fa fa-clipboard"></i>
+              </button>
+              <div class="dropdown-divider"></div>
+            </li>
+
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<div *ngFor="let alert of alerts">
+  <alert [type]="alert.type" [dismissible]="alert.dismissible" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <h1 class="text-center">
+      Welcome to {{ title }}!
+    </h1>
+  </div>
+  <div class="col-sm-12">
+    <h2>Coinbase</h2>
+  </div>
+</div>
+
+<div class="row shadow border border-primary justify-content-center">
+  <div class="col-sm-12 col-md-6">
+    <b>Address: </b> {{transferFrom}}
+  </div>
+  <div class="col-sm-12 col-md-4">
+    <b>Balance: </b>{{balance}}
+  </div>
+</div>
+
+<hr />
+<form>
+  <div class="form-group">
+    <label for="transfer">
+      <b>Address: </b>
+    </label>
+    <input type="text" class="form-control" placeholder="Address" [(ngModel)]="transferTo" name="tranferTo" />
+    <small id="addressHelpBlock" class="form-text text-muted">
+      Address must start with 0x
+    </small>
+  </div>
+  <div class="form-group">
+    <label for="amount">
+      <b>Amount in Tokens</b>
+    </label>
+    <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="amount" name="amount" />
+  </div>
+  <div class="row justify-content-end">
+    <button type="submit" class="btn btn-danger" (click)="transfer($event)">Transfer</button>&nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary" (click)="balanceOf()">Balance</button>&nbsp;&nbsp;
+  </div>
+</form>
