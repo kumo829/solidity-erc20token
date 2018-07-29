@@ -1,4 +1,4 @@
-build\
-private_network\chaindata\
-node_modules\
-angular-dapp\node_modules
+build/
+private_network/chaindata/
+node_modules/
+angular-dapp/node_modules
