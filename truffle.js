@@ -11,9 +11,10 @@
  *     gasPrice: 10000000000,
  *   },
  */
+ require('dotenv').config();
 var HDWalletProvider = require("truffle-hdwallet-provider");
-var mnemonic = "stool multiply betray coin trade penalty category yard leisure aware lyrics ball";
-var infuraToken = "4DLpOOyadqiIcXXjMezX";
+var mnemonic = process.env.WALLET_MNEMONIC;
+var infuraToken = process.env.INFURA_API_KEY;
  
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
